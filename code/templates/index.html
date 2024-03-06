@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi">
+    <title>数字处理界面</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      padding: 10px 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      font-size: 30px;
+      /* margin-bottom: 5px; */
+      margin:10px;
+      float:left;
+      height:50px;width:220px;
+    }
+
+    .form-group input[type="file"] {
+      padding: 5px;
+      height:50px;width:300px;margin:10px;cursor:pointer;font-size: 20px;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #297996;
+      color: white;
+      border: none;
+      cursor: pointer;
+      height:50px;width:130px;margin:10px;font-size: 20px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #21618C;
+    }
+    .footer {
+            background-color: #f2f2f2;  /* 灰色背景 */
+            padding: 10px 0;  /* 上下内边距为10像素 */
+            text-align: center;  /* 文字居中对齐 */
+            color: #272525;  /* 文字颜色为深灰色 */
+            margin-top: 0;
+        }
+  </style>
+<body>
+  <div class="mainimg" style="width: 100%;margin: 0;background-image:url({{ url_for('static', filename='background.png') }})">
+<div align="center" style="margin: 0;">
+    <div style="height:80px;background-color:white;margin: auto;">
+        <img src="../static/2.png" style="height:75px;width:10%;float:left;">
+        <img src="../static/11.png" style="height:75px;width:22%;float:left;">
+        <img src="../static/3.png" style="height:75px;width:25%;float:right;">
+    </div>
+    <div style=" margin: 0;width: 100%;font-size: 60px;background-color: #21618C;color:white;
+        font-weight:normal ;padding: 10px;letter-spacing: 15px;margin-bottom: 0;white-space: pre-wrap;">数字图像处理 课程项目</div>
+</div>
+
+<div align="center" style="margin: 10px">
+  
+    <div style="margin: 20px;border: 2px solid #21618C ;width:88.2%;">
+      <form action="/record" method="POST">
+        <input type="submit" value="录制视频" 
+               style="height:50px;width:130px;margin:10px;cursor:pointer;background:#21618C ;font-size: 20px;color: white;">
+      </form>
+      {% if filename0 %}
+          <video controls style="margin: 10px; width: 530px;flex-grow:1;">
+              <source src="{{ url_for('record') }}" alt="Annotated Frame" type="video/mp4">
+              您的浏览器不支持视频播放。
+          </video>
+      {% endif %}
+    </div>
+
+          
+<!-- 图像处理 -->
+    <div class="form-group" style="margin: 20px;width:85%;border: 2px solid #21618C;">
+      <label for="noise">行人跟踪检测：</label>
+      <form action="/uploadDIP" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" accept="video/*">
+          <input type="submit" value="导入视频"
+                   style="float:right;height:50px;width:130px;margin:10px;cursor:pointer;background:#21618C ;font-size: 20px;color: white;">
+      </form>
+  
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      
+        <div style="text-align: left; margin-right: auto; padding-left: 20px;flex-grow:1;flex-direction:column;">
+          {% if filename1 %}
+          <p style="margin-top: 30px;margin-bottom: 40px; width: 230px;">已上传文件: {{ filename1 }}</p>
+          {% endif %}
+          {% if filename11 %}
+            <p style="margin-top: 30px;margin-bottom: 40px; width: 230px;">已上传文件: {{ filename11 }}</p>
+          {% endif %}
+        </div>
+        <div style="text-align: center;flex-grow:1;flex-direction:column;">
+            {% if filename1 %}
+            <video controls style="margin: 5px; width: 530px;flex-grow:1;">
+              <source src="{{ url_for('video', filename=filename1) }}" type="video/mp4">
+              您的浏览器不支持视频播放。
+            </video>
+            {% endif %}
+            {% if filename11 %}
+              <video controls style="margin: 5px; width: 530px;flex-grow:1;">
+                <source src="{{ url_for('video', filename=filename11) }}" type="video/mp4">
+                您的浏览器不支持视频播放。
+              </video>
+            {% endif %}
+        </div>
+        <div style="text-align: right; margin-left: auto; padding-right: 0;flex-grow:1;flex-direction:column;">
+          {% if filename1 %}
+          <form action="/play_DIP" method="post">
+            <input type="hidden" name="filename1" value="{{ filename1 }}">
+            <input type="submit" value="图像处理" style="height: 50px; width: 130px; margin: 10px; cursor: pointer; background: #21618C; font-size: 20px; color: white;">
+          </form>
+          {% endif %}
+        </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="footer">
+  <p style="text-align:center">数字图像处理  第五组 周康成、厉槿  </p>
+  <p style="text-align:center"> 版权所有,翻版必究 </p>
+</div></div>
+</body>
+</html>
